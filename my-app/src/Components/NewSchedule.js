@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { addToDo } from '../Actions'
+import { addToDo } from '../Actions/addToDo'
 
 const NewSchedule = () => {
   // Step 2: Initialize state with content
@@ -12,18 +12,17 @@ const NewSchedule = () => {
 
   // Step 3: Define the onChange handler
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target
+    const { name, value } = event.target
     setInputData(prev => ({
         ...prev,
-        [name] : type === 'checkbox' ? checked: value
+        [name] : value
     })); // Update state with the input value
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newSchedule = {
-        content: inputData.content,
-        check: inputData.check
+        content: inputData.content
     }
     dispatch(addToDo(newSchedule));
   }
