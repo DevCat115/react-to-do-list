@@ -1,86 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToDo } from "../Actions/addToDo";
 import { deleteToDo } from "../Actions/deleteToDo";
+import { enableEdit } from "../Actions/enableEdit";
+import { saveChanges } from "../Actions/saveChanges";
+import Schedules_sub from "./Schedules_sub";
 
 function Schedules() {
   const { data } = useSelector((state) => state.todos);
-  // Step 2: Initialize state with content
-  const [inputData, setInputData] = useState({
-    content: "",
-    isEditing: false,
-    check: false,
-  });
 
-  const dispatch = useDispatch();
+  const [category, setCategory] = useState("All");
+  const [newData, setNewData] = useState(data);
 
-  // Step 3: Define the onChange handler
-  const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    setInputData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    })); // Update state with the input value
+  useEffect(() => {
+    const filteredData = data.filter((value) => {
+      if (category === "All") return true;
+      if (category === "Done") return value.check;
+      return !value.check;
+    });
+    setNewData(filteredData);
+  }, [category, data]);
+
+  const showAll = (evt) => {
+    setCategory("All");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newSchedule = {
-      content: inputData.content,
-      isEditing: inputData.isEditing,
-      check: inputData.check,
-    };
-    dispatch(addToDo(newSchedule));
+  const showDone = (evt) => {
+    setCategory("Done");
   };
 
-  const editToDo = index => {
-    
-  }
+  const showTodo = (evt) => {
+    setCategory("Todo");
+  };
 
-  const content = data.map((item, index) => (
-    <p className="todoitem" key={index}>
-      <input
-        id="check"
-        name="check"
-        type="checkbox"
-        value={item.check}
-        onChange={handleChange}
-        // 'content' property can also be used here if needed
-      />
-      <label className="label">Content : </label>
-      {inputData.isEditing ? (
-        <input
-          id="content"
-          name="content"
-          type="text"
-          value={item.content}
-          onChange={handleChange}
-          // 'content' property can also be used here if needed
-        />
-      ) : (
-        <input
-          id="content"
-          name="content"
-          type="text"
-          value={item.content}
-          onChange={handleChange}
-          disabled
-          // 'content' property can also be used here if needed
-        />
-      )}
-
-      <div>
-        <button className="editbutton" onClick={(e) => editToDo(index)}>edit</button>
-        <button className="deletebutton" onClick={(e) => dispatch(deleteToDo(index))}>
-          delete
-        </button>
-      </div>
-    </p>
-  ));
   return (
     <div>
       <h1>My Schedule</h1>
-      <div className="todolist">{content}</div>
+      <div>
+        <button className="categorybtn" onClick={showAll}>
+          All
+        </button>
+        <button className="categorybtn" onClick={showDone}>
+          Done
+        </button>
+        <button className="categorybtn" onClick={showTodo}>
+          To Do
+        </button>
+      </div>
+      <div className="todolist">
+        {newData.map((todo, index) => (
+          <Schedules_sub key={todo.content} todo={todo} index={index} />
+        ))}
+      </div>
     </div>
   );
 }
