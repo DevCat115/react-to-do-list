@@ -36,3 +36,57 @@
     transform: rotate(360deg);
   }
 }
+
+.todolist {
+  display: block;
+}
+
+.todoitem {
+  border-style: dotted;
+  border-radius: 15px;
+  border-width: 2px;
+  border-color: grey;
+  width: 500px;
+  font-size: 20px;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+.label {
+  font-size: 16px;
+  color: grey;
+}
+
+.savebutton {
+  font-size: 18px;
+  background-color: red;
+  outline: none;
+  border: none;
+  padding: 5px 20px 5px 20px;
+  color: white;
+  margin: 10px
+}
+.editbutton {
+  font-size: 16px;
+  background-color: blue;
+  outline: none;
+  border: none;
+  padding: 5px 20px 5px 20px;
+  color: white;
+  margin: 10px
+}
+.deletebutton {
+  font-size: 16px;
+  background-color: black;
+  outline: none;
+  border: none;
+  padding: 5px 20px 5px 20px;
+  color: white;
+  margin: 10px
+}
+
+.checkbox {
+  margin-left: 50px;
+}

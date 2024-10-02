@@ -41,7 +41,7 @@ const NewSchedule = () => {
             onChange={handleChange}
             // 'content' property can also be used here if needed
         /><br/><br/>
-        <button type='submit'>save</button>
+        <button type='submit' className="savebutton">save</button>
       </form>
     </div>
   );
